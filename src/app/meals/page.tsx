@@ -4,7 +4,7 @@ import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
 import {Button} from "@/components/ui/button";
 
 const MealCard = ({name, calories, description, image}: { name: string; calories: string; description: string, image: string }) => (
-  <Card className="w-64">
+  <Card className="w-full md:w-64">
     <CardHeader>
       <CardTitle>{name}</CardTitle>
     </CardHeader>
@@ -52,4 +52,3 @@ const MealsPage = () => {
 };
 
 export default MealsPage;
-

@@ -2,7 +2,7 @@ import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
 import {Button} from "@/components/ui/button";
 
 const FeatureCard = ({title, description}: { title: string; description: string }) => (
-  <Card className="w-64">
+  <Card className="w-full md:w-64">
     <CardHeader>
       <CardTitle>{title}</CardTitle>
     </CardHeader>
@@ -13,7 +13,7 @@ const FeatureCard = ({title, description}: { title: string; description: string 
 );
 
 const StatCard = ({title, value}: { title: string; value: string }) => (
-  <Card className="w-32">
+  <Card className="w-full md:w-32">
     <CardHeader>
       <CardTitle>{title}</CardTitle>
     </CardHeader>
@@ -28,7 +28,7 @@ export default function Home() {
     <div className="flex flex-col gap-4 p-4">
       <h1 className="text-2xl font-bold">Welcome Back, User!</h1>
 
-      <div className="flex flex-row gap-4 overflow-x-auto">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <FeatureCard title="Meal Planning" description="Plan your meals for the week."/>
         <FeatureCard title="Today's Workout" description="View your personalized workout."/>
         <FeatureCard title="Track Progress" description="Monitor your fitness journey."/>
@@ -36,7 +36,7 @@ export default function Home() {
 
       <div>
         <h2 className="text-xl font-bold">Today's Overview</h2>
-        <div className="flex flex-row gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <StatCard title="Steps" value="5,234"/>
           <StatCard title="Calories" value="1,872"/>
           <StatCard title="Water" value="2.5L"/>
@@ -52,4 +52,3 @@ export default function Home() {
     </div>
   );
 }
-

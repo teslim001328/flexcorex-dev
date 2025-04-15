@@ -14,9 +14,9 @@ body {
     --card-foreground: 43 0% 97.3%; /* Off-White #F8F8F8 */
     --popover: 43 0% 17.3%; /* Rich Charcoal Gray #2C2C2C */
     --popover-foreground: 43 0% 97.3%; /* Off-White #F8F8F8 */
-    --primary: 159 97% 15%; /* Dark Emerald Green #046A38 */
+    --primary: 159 97% 27%; /* Dark Emerald Green #046A38 */
     --primary-foreground: 43 55% 9%; /* Champagne Gold #D4AF37 - Adjusted for contrast */
-    --secondary: 159 97% 15%;
+    --secondary: 159 97% 27%;
     --secondary-foreground: 43 55% 9%;
     --muted: 43 0% 17.3%; /* Rich Charcoal Gray #2C2C2C */
     --muted-foreground: 0 0% 60.0%; /* Platinum Silver #E5E4E2 */
@@ -26,7 +26,7 @@ body {
     --destructive-foreground: 0 0% 98%;
     --border: 0 0% 25%;
     --input: 0 0% 14.9%;
-    --ring: 159 97% 15%; /* Deep Teal #014D4E */
+    --ring: 159 97% 27%; /* Deep Teal #014D4E */
     --chart-1: 12 76% 61%;
     --chart-2: 173 58% 39%;
     --chart-3: 197 37% 24%;
@@ -34,13 +34,13 @@ body {
     --chart-5: 27 87% 67%;
     --radius: 0.5rem;
     --sidebar-background: 43 0% 17.3%; /* Rich Charcoal Gray #2C2C2C */
-    --sidebar-foreground: 0 0% 97.3%; /* Platinum Silver #E5E4E2 */
-    --sidebar-primary: 159 97% 15%; /* Deep Teal #014D4E */
+    --sidebar-foreground: 43 0% 97.3%; /* Platinum Silver #E5E4E2 */
+    --sidebar-primary: 159 97% 27%; /* Deep Teal #014D4E */
     --sidebar-primary-foreground: 43 55% 9%; /* Champagne Gold #D4AF37 - Adjusted for contrast */
     --sidebar-accent: 351 34% 63%; /* Muted Rose Gold #B76E79 */
     --sidebar-accent-foreground: 0 0% 97.3%; /* Off-White #F8F8F8 */
     --sidebar-border: 0 0% 25%;
-    --sidebar-ring: 159 97% 15%; /* Deep Teal #014D4E */
+    --sidebar-ring: 159 97% 27%; /* Deep Teal #014D4E */
   }
   .dark {
     --background: 43 0% 11.0%; /* Matte Black #1C1C1C */
@@ -49,9 +49,9 @@ body {
     --card-foreground: 43 0% 97.3%; /* Off-White #F8F8F8 */
     --popover: 43 0% 17.3%; /* Rich Charcoal Gray #2C2C2C */
     --popover-foreground: 43 0% 97.3%; /* Off-White #F8F8F8 */
-    --primary: 159 97% 15%; /* Dark Emerald Green #046A38 */
+    --primary: 159 97% 27%; /* Dark Emerald Green #046A38 */
     --primary-foreground: 43 55% 9%; /* Champagne Gold #D4AF37 - Adjusted for contrast */
-    --secondary: 159 97% 15%;
+    --secondary: 159 97% 27%;
     --secondary-foreground: 43 55% 9%;
     --muted: 43 0% 17.3%; /* Rich Charcoal Gray #2C2C2C */
     --muted-foreground: 0 0% 60.0%; /* Platinum Silver #E5E4E2 */
@@ -61,20 +61,20 @@ body {
     --destructive-foreground: 0 0% 98%;
     --border: 0 0% 25%;
     --input: 0 0% 14.9%;
-    --ring: 159 97% 15%; /* Deep Teal #014D4E */
+    --ring: 159 97% 27%; /* Deep Teal #014D4E */
     --chart-1: 220 70% 50%;
     --chart-2: 160 60% 45%;
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
-   --sidebar-background: 43 0% 17.3%; /* Rich Charcoal Gray #2C2C2C */
+    --sidebar-background: 43 0% 17.3%; /* Rich Charcoal Gray #2C2C2C */
     --sidebar-foreground: 0 0% 97.3%; /* Platinum Silver #E5E4E2 */
-    --sidebar-primary: 159 97% 15%; /* Deep Teal #014D4E */
+    --sidebar-primary: 159 97% 27%; /* Deep Teal #014D4E */
     --sidebar-primary-foreground: 43 55% 9%; /* Champagne Gold #D4AF37 - Adjusted for contrast */
     --sidebar-accent: 351 34% 63%; /* Muted Rose Gold #B76E79 */
     --sidebar-accent-foreground: 0 0% 97.3%; /* Off-White #F8F8F8 */
     --sidebar-border: 0 0% 25%;
-    --sidebar-ring: 159 97% 15%; /* Deep Teal #014D4E */
+    --sidebar-ring: 159 97% 27%; /* Deep Teal #014D4E */
   }
 }
 
@@ -87,3 +87,26 @@ body {
   }
 }
 
+/* Sidebar styles */
+[data-sidebar="trigger"] {
+  color: hsl(var(--sidebar-foreground));
+}
+
+/* Add glow effect to the FlexAI button */
+.glow {
+  position: relative;
+  text-align: center;
+  color: hsl(var(--primary-foreground));
+  text-shadow: 0 0 5px hsl(var(--primary-foreground)), 0 0 10px hsl(var(--primary-foreground));
+  animation: glow-animation 2s linear infinite alternate;
+}
+
+@keyframes glow-animation {
+  0% {
+    box-shadow: 0 0 5px hsl(var(--primary-foreground)), 0 0 10px hsl(var(--primary-foreground));
+  }
+  100% {
+    box-shadow: 0 0 10px hsl(var(--primary-foreground)), 0 0 20px hsl(var(--primary-foreground));
+  }
+}
+}

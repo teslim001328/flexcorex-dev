@@ -4,7 +4,7 @@ import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
 import {Badge} from "@/components/ui/badge";
 
 const WorkoutCard = ({name, duration, intensity, muscleGroups}: { name: string; duration: string; intensity: string, muscleGroups: string[] }) => (
-  <Card className="w-64">
+  <Card className="w-full md:w-64">
     <CardHeader>
       <CardTitle>{name}</CardTitle>
     </CardHeader>
@@ -55,4 +55,3 @@ const WorkoutsPage = () => {
 };
 
 export default WorkoutsPage;
-

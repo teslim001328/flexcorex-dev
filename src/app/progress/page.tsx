@@ -1,4 +1,4 @@
-;"use client";
+"use client";
 
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
 import {LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from 'recharts';
@@ -28,7 +28,7 @@ const ProgressChart = () => {
 };
 
 const StatCard = ({title, value}: { title: string; value: string }) => (
-  <Card className="w-32">
+  <Card className="w-full md:w-32">
     <CardHeader>
       <CardTitle>{title}</CardTitle>
     </CardHeader>
@@ -39,7 +39,7 @@ const StatCard = ({title, value}: { title: string; value: string }) => (
 );
 
 const AchievementCard = ({title, description}: { title: string; description: string }) => (
-  <Card className="w-64">
+  <Card className="w-full md:w-64">
     <CardHeader>
       <CardTitle>{title}</CardTitle>
     </CardHeader>
@@ -82,4 +82,3 @@ const ProgressPage = () => {
 };
 
 export default ProgressPage;
-
