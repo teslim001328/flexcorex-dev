@@ -1,1 +1,4 @@
-// Flows will be imported for their side effects in this file.
+import '@/ai/flows/suggest-workout.ts';
+import '@/ai/flows/summarize-progress.ts';
+import '@/ai/flows/personalized-wellness-insights.ts';
+import '@/ai/flows/generate-meal-plan.ts';
