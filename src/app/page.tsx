@@ -26,7 +26,7 @@ const StatCard = ({title, value}: { title: string; value: string }) => (
 export default function Home() {
   return (
     <div className="flex flex-col gap-4 p-4">
-      <h1 className="text-2xl font-bold">Welcome Back, User!</h1>
+      <h1 className="text-2xl font-bold">Flex. Thrive. Conquer., User!</h1>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <FeatureCard title="Meal Planning" description="Plan your meals for the week."/>
