@@ -1,12 +1,59 @@
-"use client";
+;"use client";
+
+import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
+import {Button} from "@/components/ui/button";
+
+const GroupCard = ({name, image, memberCount}: { name: string; image: string; memberCount: string }) => (
+  <Card className="w-64">
+    <CardHeader>
+      <CardTitle>{name}</CardTitle>
+    </CardHeader>
+    <CardContent>
+      <img src={image} alt={name} className="w-full h-32 object-cover rounded-md mb-2"/>
+      <p className="text-sm text-muted-foreground">Members: {memberCount}</p>
+      <Button variant="outline" className="mt-2">Join Group</Button>
+    </CardContent>
+  </Card>
+);
 
 const CommunityPage = () => {
+  const groups = [
+    {
+      name: "Fitness Fanatics",
+      image: "https://picsum.photos/203/150",
+      memberCount: "1,234",
+    },
+    {
+      name: "Healthy Eating Community",
+      image: "https://picsum.photos/204/150",
+      memberCount: "567",
+    },
+    {
+      name: "Yoga and Mindfulness",
+      image: "https://picsum.photos/205/150",
+      memberCount: "890",
+    },
+  ];
+
   return (
     <div className="flex flex-col h-full p-4">
       <h1 className="text-2xl font-bold">Community</h1>
-      <p>This is the community page.</p>
+
+      <div className="mb-4">
+        {/* Placeholder for filters */}
+        <Button variant="secondary" size="sm">Trending</Button>
+        <Button variant="secondary" size="sm">New</Button>
+        <Button variant="secondary" size="sm">My Groups</Button>
+      </div>
+
+      <div className="flex flex-row gap-4 overflow-x-auto">
+        {groups.map((group, index) => (
+          <GroupCard key={index} name={group.name} image={group.image} memberCount={group.memberCount}/>
+        ))}
+      </div>
     </div>
   );
 };
 
 export default CommunityPage;
+

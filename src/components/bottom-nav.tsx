@@ -13,6 +13,13 @@ const BottomNav = () => {
         <NavItem href="/" icon={Home} label="Home" active={pathname === "/"}/>
         <NavItem href="/meals" icon={Calendar} label="Meals" active={pathname === "/meals"}/>
         <NavItem href="/workouts" icon={Flame} label="Workouts" active={pathname === "/workouts"}/>
+        <div className="flex items-center justify-center">
+          <Link href="/flexai" className="relative">
+            <button className="w-12 h-12 rounded-full bg-primary text-primary-foreground flex items-center justify-center shadow-md">
+              <Flame className="h-6 w-6"/>
+            </button>
+          </Link>
+        </div>
         <NavItem href="/progress" icon={ListChecks} label="Progress" active={pathname === "/progress"}/>
         <NavItem href="/community" icon={Users} label="Community" active={pathname === "/community"}/>
       </nav>
@@ -28,3 +35,4 @@ const NavItem = ({href, icon: Icon, label, active}: { href: string; icon: any; l
 );
 
 export default BottomNav;
+
