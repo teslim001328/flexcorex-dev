@@ -1,4 +1,4 @@
-use client";
+"use client";
 
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
 import {Button} from "@/components/ui/button";
@@ -56,3 +56,5 @@ const CommunityPage = () => {
 };
 
 export default CommunityPage;
+
+    
