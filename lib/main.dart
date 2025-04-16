@@ -1,47 +1,44 @@
 import 'package:flutter/material.dart';
-import 'package:flexcorex/pages/home_page.dart';
-import 'package:flexcorex/pages/flexai_page.dart';
-import 'package:flexcorex/pages/meal_planning_page.dart';
-import 'package:flexcorex/pages/workout_page.dart';
-import 'package:flexcorex/pages/progress_page.dart';
-import 'package:flexcorex/pages/community_page.dart';
-import 'package:flexcorex/pages/onboarding_page.dart';
-import 'package:flexcorex/themes/app_theme.dart';
-import 'package:flexcorex/widgets/bottom_nav_bar.dart';
+import 'package:provider/provider.dart';
+import 'themes/app_theme.dart';
+import 'providers/theme_provider.dart';
+import 'utils/constants.dart';
+import 'widgets/bottom_nav_bar.dart';
+import 'pages/home/home_page.dart';
+import 'pages/meals/meal_planning_page.dart';
+import 'pages/workouts/workout_plans_page.dart';
+import 'pages/progress/progress_tracking_page.dart';
+import 'pages/community/community_page.dart';
+import 'pages/settings/settings_page.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => ThemeProvider(),
+      child: const FlexcorexApp(),
+    ),
+  );
 }
 
-class MyApp extends StatelessWidget {
+class FlexcorexApp extends StatelessWidget {
+  const FlexcorexApp({super.key});
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) {    
+    final themeProvider = Provider.of<ThemeProvider>(context);
+
     return MaterialApp(
-      title: 'Flexcorex',
-      theme: AppTheme.darkTheme,
-      darkTheme: AppTheme.darkTheme,
-      themeMode: ThemeMode.dark,
-      initialRoute: '/home',
-      routes: {
-        '/home': (context) => HomePage(),
-        '/flexai': (context) => FlexAIPage(),
-        '/meals': (context) => MealPlanningPage(),
-        '/workouts': (context) => WorkoutPage(),
-        '/progress': (context) => ProgressPage(),
-        '/community': (context) => CommunityPage(),
-        '/onboarding': (context) => OnboardingPage(),
-      },
-      home: RootPage(), // Use RootPage to include BottomNavBar
-    );
-  }
-}
-
-class RootPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: HomePage(), // Default to HomePage, can be changed based on needs
-      bottomNavigationBar: BottomNavBar(),
-    );
-  }
+        title: AppConstants.appName,
+        theme: themeProvider.currentTheme,
+        home: const BottomNavBar(),
+        routes: {
+          '/home': (context) => const HomePage(),
+          '/meals': (context) => const MealPlanningPage(),
+          '/workouts': (context) => const WorkoutPlansPage(),
+          '/progress': (context) => const ProgressTrackingPage(),
+          '/community': (context) => const CommunityPage(),
+          '/settings': (context) => const SettingsPage(),
+        },
+      );
+    }
 }
