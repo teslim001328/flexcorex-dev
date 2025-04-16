@@ -21,6 +21,4 @@ class AppColors {
   // Theme Colors (for easier reference in the app)
   static const Color primary = deepTeal;
   static const Color accent = champagneGold;
-  static const Color backgroundDark = richCharcoalGray;
-  static const Color backgroundLight = offWhite;
 }

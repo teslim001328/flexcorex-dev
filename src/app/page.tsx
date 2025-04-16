@@ -1,5 +1,6 @@
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
 import {Button} from "@/components/ui/button";
+import Link from "next/link";
 
 const FeatureCard = ({title, description}: { title: string; description: string }) => (
   <Card className="w-full md:w-64">
@@ -46,7 +47,7 @@ export default function Home() {
        {/* Add FlexAI Prompt Test*/}
       <div>
         <Button>
-            <a href="/flexai">Go to FlexAI</a>
+            <Link href="/flexai">Go to FlexAI</Link>
           </Button>
       </div>
     </div>

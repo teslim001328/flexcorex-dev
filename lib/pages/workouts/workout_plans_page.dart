@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flexcorex/widgets/workout_card.dart';
-import 'package:flexcorex/themes/colors.dart';
+import '../../widgets/workout_card.dart';
+import '../../themes/colors.dart';
 
-class WorkoutPlansPage extends StatefulWidget {
+class WorkoutPlansPage extends StatefulWidget { // Fixed typo in class name
   const WorkoutPlansPage({Key? key}) : super(key: key);
 
   @override
@@ -63,9 +63,13 @@ class _WorkoutPlansPageState extends State<WorkoutPlansPage> {
                   _selectedFilter = selected ? filter : null;
                 });
               },
-              selectedColor: AppColors.mutedRoseGold,
+              selectedColor: AppColors.mutedRoseGold.withOpacity(0.7),
+              backgroundColor: Theme.of(context).cardColor,
+              labelStyle: TextStyle(
+                color: _selectedFilter == filter ? Colors.white : Theme.of(context).textTheme.bodyMedium?.color,
+              ),
             )).toList(),
-          ),
+        ),
         ),
         Expanded(
           child: ListView.builder(

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:flexcorex/themes/app_theme.dart';
+import 'package:flexcorex/providers/theme_provider.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({Key? key}) : super(key: key);
@@ -9,10 +11,9 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  bool _isDarkMode = true; // Default to dark mode
-
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Settings'),
@@ -30,26 +31,13 @@ class _SettingsPageState extends State<SettingsPage> {
                   style: TextStyle(fontSize: 18),
                 ),
                 Switch(
-                  value: _isDarkMode,
+                  value: themeProvider.isDarkMode,
                   onChanged: (value) {
-                    setState(() {
-                      _isDarkMode = value;
-                      // TODO: Implement theme change and save to preferences
-                    });
+                    themeProvider.toggleTheme();
                   },
-                  activeColor: AppTheme.accentColor,
+                  activeColor: Theme.of(context).primaryColor,
                 ),
               ],
-            ),
-            const SizedBox(height: 20),
-            // Placeholder for save button or other settings
-            Center(
-              child: ElevatedButton(
-                onPressed: () {
-                  // TODO: Save preferences
-                },
-                child: const Text('Save'),
-              ),
             ),
           ],
         ),

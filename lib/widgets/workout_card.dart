@@ -1,21 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flexcorex/themes/colors.dart';
 
 class WorkoutCard extends StatelessWidget {
   const WorkoutCard({
     super.key,
     required this.name,
-    required this.image,
     required this.duration,
     required this.intensity,
     required this.muscleGroups,
   }) : super();
 
   final String name;
-  final String image;
   final String duration;
   final String intensity;
-  final List<String> muscleGroups;
+  final String muscleGroups;
 
   @override
   Widget build(BuildContext context) {
@@ -32,54 +29,43 @@ class WorkoutCard extends StatelessWidget {
           ),
         ],
       ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(16),
-        child: Stack(
-          children: [
-            Image.network(
-              image,
-              height: 200,
-              width: double.infinity,
-              fit: BoxFit.cover,
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            name,
+            style: theme.textTheme.titleMedium?.copyWith(
+              fontWeight: FontWeight.bold,
             ),
-            Positioned(
-              bottom: 0,
-              left: 0,
-              right: 0,
-              child: Container(
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.bottomCenter,
-                    end: Alignment.topCenter,
-                    colors: [
-                      Colors.black.withOpacity(0.8),
-                      Colors.transparent,
-                    ],
+          ),
+          const SizedBox(height: 8),
+          Row(
+            children: [
+              Icon(Icons.timer, size: 16, color: theme.primaryColor),
+              const SizedBox(width: 4),
+              Text(
+                duration,
+                style: theme.textTheme.bodySmall,
+              ),
+              const SizedBox(width: 8),
+              if (intensity.isNotEmpty)
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  decoration: BoxDecoration(
+                    color: Colors.grey.shade700,
+                    borderRadius: BorderRadius.circular(5),
                   ),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      name,
-                      style: theme.textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.offWhite,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    Row(
-                      children: [
-                        Icon(Icons.timer, size: 16, color: AppColors.offWhite),
-                        const SizedBox(width: 4),
-                        Text(
-                          duration,
-                          style: theme.textTheme.bodySmall?.copyWith(
-                            color: AppColors.offWhite,
-                          ),
-                        ),
-                        const SizedBox(width: 16),
+                  child: Text(intensity, style: const TextStyle(fontSize: 12, color: Colors.white))),
+              const SizedBox(width: 8),
+              Text(muscleGroups)
+            ],
+          )
+        ],
+      ),
+    );
+  }
+}
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                           decoration: BoxDecoration(

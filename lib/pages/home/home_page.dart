@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flexcorex/utils/constants.dart';
-import 'package:flexcorex/widgets/feature_card.dart';
-import 'package:flexcorex/widgets/stat_card.dart';
+import '../../widgets/feature_card.dart';
+import '../../widgets/stat_card.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -63,8 +62,8 @@ class _HomePageState extends State<HomePage> {
               style: Theme.of(context).textTheme.headlineMedium,
             ),
             const SizedBox(height: 8),
-            Text(
-              AppConstants.appSlogan,
+            const Text(
+              "Your personalized fitness companion",
               style: Theme.of(context).textTheme.bodyLarge,
             ),
             const SizedBox(height: 24),

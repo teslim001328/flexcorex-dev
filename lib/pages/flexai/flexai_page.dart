@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flexcorex/themes/colors.dart';
-import 'package:flexcorex/widgets/chatbot_bubble.dart';
+import 'package:flexcorex/widgets/chat_bubble.dart';
 
 class FlexAIChatPage extends StatefulWidget {
   const FlexAIChatPage({Key? key}) : super(key: key);
@@ -11,15 +10,15 @@ class FlexAIChatPage extends StatefulWidget {
 
 class _FlexAIChatPageState extends State<FlexAIChatPage> {
   final List<ChatMessage> _messages = [
-    ChatMessage(
-      text: "Hey, I’m FlexAI. Ready to thrive?",
-      isUser: false,
-    ),
+    ChatMessage(text: "Hey, I’m FlexAI. Ready to thrive?", isUser: false),
   ];
   final TextEditingController _textController = TextEditingController();
 
   void _handleSubmitted(String text) {
+    if (text.isEmpty) return;
+
     _textController.clear();
+
     setState(() {
       _messages.add(ChatMessage(text: text, isUser: true));
       _messages.add(ChatMessage(text: "...", isUser: false));
@@ -34,11 +33,12 @@ class _FlexAIChatPageState extends State<FlexAIChatPage> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Scaffold(
-      backgroundColor: AppColors.richCharcoalGray,
+      backgroundColor: theme.colorScheme.background,
       appBar: AppBar(
         title: const Text("FlexAI"),
-        backgroundColor: AppColors.matteBlack,
+        backgroundColor: theme.appBarTheme.backgroundColor,
       ),
       body: Column(
         children: [
@@ -50,11 +50,10 @@ class _FlexAIChatPageState extends State<FlexAIChatPage> {
               itemBuilder: (_, int index) => ChatBubble(message: _messages[_messages.length - 1 - index]),
             ),
           ),
-          const Divider(height: 1.0),
           Container(
-            decoration: BoxDecoration(
-              color: AppColors.matteBlack,
-            ),
+            decoration: BoxDecoration(color: theme.colorScheme.surface),
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: _buildTextComposer(),
             child: _buildTextComposer(),
           ),
         ],
@@ -63,30 +62,31 @@ class _FlexAIChatPageState extends State<FlexAIChatPage> {
   }
 
   Widget _buildTextComposer() {
-    return IconTheme(
-      data: IconThemeData(color: Theme.of(context).colorScheme.secondary),
-      child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 8.0),
-        child: Row(
-          children: [
-            Flexible(
-              child: TextField(
-                controller: _textController,
-                onSubmitted: _handleSubmitted,
-                style: const TextStyle(color: Colors.white),
-                decoration: const InputDecoration.collapsed(
-                  hintText: "Send a message",
-                  hintStyle: TextStyle(color: Colors.grey),
-                ),
-              ),
+    final theme = Theme.of(context);
+    return Row(
+      children: [
+        Expanded(
+          child: TextField(
+            controller: _textController,
+            onSubmitted: _handleSubmitted,
+            style: TextStyle(color: theme.colorScheme.onSurface),
+            decoration: InputDecoration(
+              hintText: "Send a message",
+              hintStyle: TextStyle(color: theme.hintColor),
+              border: InputBorder.none,
             ),
-            IconButton(
-              icon: const Icon(Icons.mic, color: AppColors.champagneGold),
-              onPressed: () => {},
-            ),
-            IconButton(
-              icon: const Icon(Icons.send, color: AppColors.champagneGold),
-              onPressed: () => _handleSubmitted(_textController.text),
+          ),
+        ),
+        IconButton(
+          icon: Icon(Icons.send, color: theme.primaryColor),
+          onPressed: () {
+            _handleSubmitted(_textController.text);
+          },
+        ),
+      ],
+    );
+  }
+}
             ),
           ],
         ),

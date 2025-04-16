@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flexcorex/themes/colors.dart'; // Assuming this is where your colors are defined
+import 'package:flexcorex/themes/colors.dart';
 
 class MealCard extends StatelessWidget {
   const MealCard({

@@ -1,6 +1,6 @@
 "use client";
 
-import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {Badge} from "@/components/ui/badge";
 
 const WorkoutCard = ({name, duration, intensity, muscleGroups}: { name: string; duration: string; intensity: string, muscleGroups: string[] }) => (

@@ -190,23 +190,7 @@ class AppTheme {
           fontSize: 14,
           color: onBackground,
         ),
-        labelLarge: TextStyle(
-          fontSize: 16,
-          fontWeight: FontWeight.bold,
-          color: onSecondary,
-        ),
-        labelMedium: TextStyle(
-          fontSize: 14,
-          fontWeight: FontWeight.bold,
-          color: onSecondary,
-        ),
-        labelSmall: TextStyle(
-          fontSize: 12,
-          fontWeight: FontWeight.bold,
-          color: onSecondary,
-        ),
       ),
-      // Add more theming as needed (e.g., text styles, input decoration, etc.)
     );
   }
 }

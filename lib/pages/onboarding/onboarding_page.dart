@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flexcorex/themes/colors.dart';
-import 'package:flexcorex/themes/app_theme.dart';
-import 'package:flexcorex/utils/constants.dart';
+import '../../themes/colors.dart';
+import '../../themes/app_theme.dart';
+import '../../utils/constants.dart';
 
-class OnboardingPage extends StatefulWidget{
+class OnboardingPage extends StatefulWidget {
   @override
   _OnboardingPageState createState() => _OnboardingPageState();
 }
 
 class _OnboardingPageState extends State<OnboardingPage> {
+  // final PageController _pageController = PageController(initialPage: 0);
   final PageController _pageController = PageController(initialPage: 0);
   int _currentPage = 0;
   final _formKey = GlobalKey<FormState>();
@@ -23,38 +24,42 @@ class _OnboardingPageState extends State<OnboardingPage> {
   String? _workoutLevel;
   String? _equipment;
 
-  List<String> goals = ['Lose Weight', 'Build Muscle', 'Stay Fit'];
-  List<String> dietTypes = ['Vegan', 'Vegetarian', 'Pescatarian', 'Keto', 'Paleo', 'None'];
-  List<String> workoutLevels = ['Beginner', 'Intermediate', 'Advanced'];
-  List<String> equipmentOptions = ['Home', 'Gym', 'Both', 'None'];
+  final List<String> goals = ['Lose Weight', 'Build Muscle', 'Stay Fit'];
+  final List<String> dietTypes = ['Vegan', 'Vegetarian', 'Pescatarian', 'Keto', 'Paleo', 'None'];
+  final List<String> workoutLevels = ['Beginner', 'Intermediate', 'Advanced'];
+  final List<String> equipmentOptions = ['Home', 'Gym', 'Both', 'None'];
+
+  bool get isLastPage => _currentPage == 2;
+  bool get isFirstPage => _currentPage == 0;
+  ];
 
   void _nextPage() {
-    if (_formKey.currentState!.validate()) {
-      _formKey.currentState!.save();
-      if (_currentPage < 3) {
-        _pageController.nextPage(
-          duration:
-          Duration(milliseconds: 500),
-          curve: Curves.easeInOut,
-        );
-      }
-    }
-  }
-
-  void _previousPage() {
-    if (_currentPage > 0) {
-      _pageController.previousPage(
-        duration:
-        Duration(milliseconds: 500),
-        curve: Curves.easeInOut,
-      );
-    }
+    _pageController.nextPage(duration: Duration(milliseconds: 300), curve: Curves.easeIn);
   }
 
   void _onPageChanged(int page) {
     setState(() {
       _currentPage = page;
     });
+  }
+
+  void _previousPage() {
+    _pageController.previousPage(
+        duration: const Duration(milliseconds: 300), curve: Curves.easeIn);
+  }
+
+  bool _validateAndSaveForm() {
+    final form = _formKey.currentState;
+    if (form!.validate()) {
+      form.save();
+      return true;
+    }
+    return false;
+  }
+
+  void _handleSubmit() {
+    if (_validateAndSaveForm()) {
+      isLastPage ? _saveData() : _nextPage();
   }
 
   void _saveData() {
@@ -68,7 +73,9 @@ class _OnboardingPageState extends State<OnboardingPage> {
     print('Diet Type: $_dietType');
     print('Workout Level: $_workoutLevel');
     print('Equipment: $_equipment');
-    Navigator.pushReplacementNamed(context, homeRoute);}
+    Navigator.pushReplacementNamed(context, homeRoute);
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -80,114 +87,137 @@ class _OnboardingPageState extends State<OnboardingPage> {
           statusBarColor: AppColors.richCharcoalGray,
           statusBarIconBrightness: Brightness.light,
         ),
-        title: Text('Welcome to Flexcorex', style: AppTheme.lightTextTheme.titleMedium),
+        title: Text('Welcome to Flexcorex',
+            style: AppTheme.lightTextTheme.titleMedium,),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
+
           key: _formKey,
           child: PageView(
             controller: _pageController,
             physics: NeverScrollableScrollPhysics(),
-            onPageChanged:_onPageChanged,
+            onPageChanged: _onPageChanged,
             children: [
               _buildNameAgeStep(),
               _buildFitnessStep(),
               _buildWorkoutStep(),
             ],
+
           ),
         ),
       ),
       bottomNavigationBar: BottomAppBar(
-        color: AppColors.richCharcoalGray,
+        color: AppColors.offWhite,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              if (_currentPage > 0)
+              if (!isFirstPage)
                 ElevatedButton(
                   onPressed: _previousPage,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.mutedRoseGold,
+                  ),
                   child: Text('Previous', style: AppTheme.darkTextTheme.bodyMedium),
                 ),
               ElevatedButton(
-                onPressed: _currentPage == 3 ? _saveData : _nextPage,
-                child: Text(_currentPage == 3 ? 'Finish' : 'Next', style: AppTheme.darkTextTheme.bodyMedium),
+                onPressed: _handleSubmit,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.darkEmeraldGreen,
+                ),
+                child: Text(
+                    isLastPage ? 'Finish' : 'Next',
+                    style: AppTheme.darkTextTheme.bodyMedium),
               ),
             ],
           ),
+
+
         ),
       ),
-    );// This trailing parenthesis was missing in the original file
+    );
   }
 
   Widget _buildNameAgeStep() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('What\'s your name and age?', style: AppTheme.lightTextTheme.bodyLarge),
-        SizedBox(height: 20),
+        Text('What\'s your name and age?',
+            style: AppTheme.darkTextTheme.bodyLarge),
+        const SizedBox(height: 20),
         TextFormField(
-          style: TextStyle(color: AppColors.platinumSilver),
+          style: TextStyle(color: AppColors.matteBlack),
           decoration: InputDecoration(
               labelText: 'Name',
-              labelStyle: TextStyle(color: AppColors.platinumSilver),
-              enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: AppColors.platinumSilver)),
-              focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: AppColors.platinumSilver)),
-              border: OutlineInputBorder(borderRadius: BorderRadius.circular(12))),
-          validator: (value) =>
-          value!.isEmpty ? 'Please enter your name' : null,
-          onSaved: (value) => _name = value!,
+              labelStyle: TextStyle(color: AppColors.matteBlack),
+              enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: AppColors.matteBlack)),
+              focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: AppColors.matteBlack)),
+              border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+              filled: true,
+              fillColor: AppColors.offWhite,),
+          validator: (value) => value!.isEmpty ? 'Please enter your name' : null,
+          onSaved: (value) => _name = value ?? '',
         ),
-        SizedBox(height: 20),
+        const SizedBox(height: 20),
         TextFormField(
-          style: TextStyle(color: AppColors.platinumSilver),
+          style: TextStyle(color: AppColors.matteBlack),
           decoration: InputDecoration(
             labelText: 'Age',
-              labelStyle: TextStyle(color: AppColors.platinumSilver),
-              enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: AppColors.platinumSilver)),
-              focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: AppColors.platinumSilver)),
-              border: OutlineInputBorder(borderRadius: BorderRadius.circular(12))),
+            labelStyle: TextStyle(color: AppColors.matteBlack),
+            enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: AppColors.matteBlack)),
+            focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: AppColors.matteBlack)),
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+            filled: true,
+            fillColor: AppColors.offWhite,),
           keyboardType: TextInputType.number,
           inputFormatters: <TextInputFormatter>[
             FilteringTextInputFormatter.digitsOnly
           ],
-          validator: (value) =>
-          value!.isEmpty ? 'Please enter your age' : null,
+          validator: (value) => value!.isEmpty ? 'Please enter your age' : null,
           onSaved: (value) => _age = int.tryParse(value!),
-          ),
-          SizedBox(height: 20),
-          TextFormField(
-            style: TextStyle(color: AppColors.platinumSilver),
-            decoration: InputDecoration(
-              labelText: 'Weight (kg)',
-              labelStyle: TextStyle(color: AppColors.platinumSilver),
-              enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: AppColors.platinumSilver)),
-              focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: AppColors.platinumSilver)),
-              border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12)),
-            ),
-            keyboardType: TextInputType.number,
-            inputFormatters: <TextInputFormatter>[
-              FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
-            ],
-            validator: (value) =>
-            value!.isEmpty ? 'Please enter your weight' : null,
+        ),
+        const SizedBox(height: 20),
+        TextFormField(
+          style: TextStyle(color: AppColors.matteBlack),
+          decoration: InputDecoration(
+            labelText: 'Weight (kg)',
+            labelStyle: TextStyle(color: AppColors.matteBlack),
+            enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: AppColors.matteBlack)),
+            focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: AppColors.matteBlack)),
+            border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12)),
+            filled: true,
+            fillColor: AppColors.offWhite,
           ),
           validator: (value) => value!.isEmpty ? 'Please enter your weight' : null,
           onSaved: (value) => _weight = double.tryParse(value!),
+          keyboardType: TextInputType.number,
+          inputFormatters: <TextInputFormatter>[
+            FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')), // Allow decimals
+          ],
         ),
-        SizedBox(height: 20),
+        const SizedBox(height: 20),
         TextFormField(
-          style: TextStyle(color: AppColors.platinumSilver),
+          style: TextStyle(color: AppColors.matteBlack),
           decoration: InputDecoration(
             labelText: 'Height (cm)',
-              labelStyle: TextStyle(color: AppColors.platinumSilver),
-              enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: AppColors.platinumSilver)),
-              focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: AppColors.platinumSilver)),
-              border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+            labelStyle: TextStyle(color: AppColors.matteBlack),
+            enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: AppColors.matteBlack)),
+            focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: AppColors.matteBlack)),
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+            filled: true,
+            fillColor: AppColors.offWhite,
           ),
           keyboardType: TextInputType.number,
           inputFormatters: <TextInputFormatter>[
@@ -204,12 +234,13 @@ class _OnboardingPageState extends State<OnboardingPage> {
     return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('What are your fitness goals and dietary preferences?', style: AppTheme.lightTextTheme.bodyLarge),
-          SizedBox(height: 20),
+          Text('What are your fitness goals and dietary preferences?',
+              style: AppTheme.darkTextTheme.bodyLarge),
+          const SizedBox(height: 20),
           _buildGoalDropdown(),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           _buildDietTypeDropdown(),
-        ]
+        ],
     );
   }
 
@@ -217,17 +248,20 @@ class _OnboardingPageState extends State<OnboardingPage> {
   Widget _buildGoalStep() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text('What are your goals?', style: AppTheme.lightTextTheme.bodyLarge),
-        SizedBox(height: 20),
+      children:  [
+        Text('What are your goals?', style: AppTheme.darkTextTheme.bodyLarge),
+        const SizedBox(height: 20),
         DropdownButtonFormField<String>(
-          style: TextStyle(color: AppColors.platinumSilver),
-          dropdownColor: AppColors.richCharcoalGray,
+          style: TextStyle(color: AppColors.matteBlack),
+          dropdownColor: AppColors.offWhite,
           decoration: InputDecoration(
             labelText: 'Goal',
-            labelStyle: TextStyle(color: AppColors.platinumSilver),
-            enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: AppColors.platinumSilver)),
-            focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: AppColors.platinumSilver)),
+            labelStyle: TextStyle(color: AppColors.matteBlack),
+            enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: AppColors.matteBlack)),
+            focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: AppColors.matteBlack)),
+            filled: true,
           ),
           value: _goal,
           items: goals.map<DropdownMenuItem<String>>((String value) {
@@ -236,7 +270,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
               child: Text(value),
             );
           }).toList(),
-          onChanged: (String? newValue) {
+          onChanged: (String? newValue) { // Added onChanged callback
             setState(() {
               _goal = newValue;
             });
@@ -252,16 +286,18 @@ class _OnboardingPageState extends State<OnboardingPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('What\'s your diet type?', style: AppTheme.lightTextTheme.bodyLarge),
-        SizedBox(height: 20),
+        Text('What\'s your diet type?', style: AppTheme.darkTextTheme.bodyLarge),
+        const SizedBox(height: 20),
         DropdownButtonFormField<String>(
-          style: TextStyle(color: AppColors.platinumSilver),
-          dropdownColor: AppColors.richCharcoalGray,
+          style: TextStyle(color: AppColors.matteBlack),
+          dropdownColor: AppColors.offWhite,
           decoration: InputDecoration(
             labelText: 'Diet Type',
-            labelStyle: TextStyle(color: AppColors.platinumSilver),
-            enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: AppColors.platinumSilver)),
-            focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: AppColors.platinumSilver)),
+            labelStyle: TextStyle(color: AppColors.matteBlack),
+            enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: AppColors.matteBlack)),
+            focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: AppColors.matteBlack)),
           ),
           value: _dietType,
           items: dietTypes.map<DropdownMenuItem<String>>((String value) {
@@ -270,7 +306,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
               child: Text(value),
             );
           }).toList(),
-          onChanged: (String? newValue) {
+          onChanged: (String? newValue) { // Added onChanged callback
             setState(() {
               _dietType = newValue;
             });
@@ -286,16 +322,19 @@ class _OnboardingPageState extends State<OnboardingPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('What\'s your workout level and equipment available?', style: AppTheme.lightTextTheme.bodyLarge),
-        SizedBox(height: 20),
+        Text('What\'s your workout level and equipment available?',
+            style: AppTheme.darkTextTheme.bodyLarge),
+        const SizedBox(height: 20),
         DropdownButtonFormField<String>(
-          style: TextStyle(color: AppColors.platinumSilver),
-          dropdownColor: AppColors.richCharcoalGray,
+          style: TextStyle(color: AppColors.matteBlack),
+          dropdownColor: AppColors.offWhite,
           decoration: InputDecoration(
             labelText: 'Workout Level',
-            labelStyle: TextStyle(color: AppColors.platinumSilver),
-            enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: AppColors.platinumSilver)),
-            focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: AppColors.platinumSilver)),
+            labelStyle: TextStyle(color: AppColors.matteBlack),
+            enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: AppColors.matteBlack)),
+            focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: AppColors.matteBlack)),
           ),
           value: _workoutLevel,
           items: workoutLevels.map<DropdownMenuItem<String>>((String value) {
@@ -304,7 +343,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
               child: Text(value),
             );
           }).toList(),
-          onChanged: (String? newValue) {
+          onChanged: (String? newValue) { // Added onChanged callback
             setState(() {
               _workoutLevel = newValue;
             });
@@ -313,14 +352,16 @@ class _OnboardingPageState extends State<OnboardingPage> {
           onSaved: (value) => _workoutLevel = value!,
         ),
         SizedBox(height: 20),
-        DropdownButtonFormField<String>(
-          style: TextStyle(color: AppColors.platinumSilver),
-          dropdownColor: AppColors.richCharcoalGray,
+        DropdownButtonFormField<String>( // Changed SizedBox to const SizedBox
+          style: TextStyle(color: AppColors.matteBlack),
+          dropdownColor: AppColors.offWhite,
           decoration: InputDecoration(
             labelText: 'Equipment Available',
-            labelStyle: TextStyle(color: AppColors.platinumSilver),
-            enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: AppColors.platinumSilver)),
-            focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: AppColors.platinumSilver)),
+            labelStyle: TextStyle(color: AppColors.matteBlack),
+            enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: AppColors.matteBlack)),
+            focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: AppColors.matteBlack)),
           ),
           value: _equipment,
           items: equipmentOptions.map<DropdownMenuItem<String>>((String value) {
@@ -329,7 +370,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
               child: Text(value),
             );
           }).toList(),
-          onChanged: (String? newValue) {
+          onChanged: (String? newValue) { // Added onChanged callback
             setState(() {
               _equipment = newValue;
             });
@@ -341,18 +382,20 @@ class _OnboardingPageState extends State<OnboardingPage> {
     );
   }
 
-
-
   Widget _buildGoalDropdown() {
     return DropdownButtonFormField<String>(
-      style: TextStyle(color: AppColors.platinumSilver),
-      dropdownColor: AppColors.richCharcoalGray,
+      style: TextStyle(color: AppColors.matteBlack),
+      dropdownColor: AppColors.offWhite,
       decoration: InputDecoration(
-        labelText: 'Fitness Goal',
-        labelStyle: TextStyle(color: AppColors.platinumSilver),
-        enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: AppColors.platinumSilver)),
-        focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: AppColors.platinumSilver)),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+          labelText: 'Fitness Goal',
+          labelStyle: TextStyle(color: AppColors.matteBlack),
+          enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: AppColors.matteBlack)),
+          focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: AppColors.matteBlack)),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+          filled: true,
+          fillColor: AppColors.offWhite,
       ),
       value: _goal,
       items: goals.map<DropdownMenuItem<String>>((String value) {
@@ -361,7 +404,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
           child: Text(value),
         );
       }).toList(),
-      onChanged: (String? newValue) {
+      onChanged: (String? newValue) { // Added onChanged callback
         setState(() {
           _goal = newValue;
         });
@@ -373,14 +416,18 @@ class _OnboardingPageState extends State<OnboardingPage> {
 
   Widget _buildDietTypeDropdown() {
     return DropdownButtonFormField<String>(
-      style: TextStyle(color: AppColors.platinumSilver),
-      dropdownColor: AppColors.richCharcoalGray,
+      style: TextStyle(color: AppColors.matteBlack),
+      dropdownColor: AppColors.offWhite,
       decoration: InputDecoration(
-        labelText: 'Dietary Preference',
-        labelStyle: TextStyle(color: AppColors.platinumSilver),
-        enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: AppColors.platinumSilver)),
-        focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: AppColors.platinumSilver)),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+          labelText: 'Dietary Preference',
+          labelStyle: TextStyle(color: AppColors.matteBlack),
+          enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: AppColors.matteBlack)),
+          focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: AppColors.matteBlack)),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+          filled: true,
+          fillColor: AppColors.offWhite,
       ),
       value: _dietType,
       items: dietTypes.map<DropdownMenuItem<String>>((String value) {
@@ -389,7 +436,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
           child: Text(value),
         );
       }).toList(),
-      onChanged: (String? newValue) {
+      onChanged: (String? newValue) { // Added onChanged callback
         setState(() {
           _dietType = newValue;
         });

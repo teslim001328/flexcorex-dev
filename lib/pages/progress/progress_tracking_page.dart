@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flexcorex/themes/app_theme.dart';
+import '../../widgets/progress_chart.dart';
 
 class ProgressTrackingPage extends StatefulWidget {
   const ProgressTrackingPage({super.key});
@@ -12,12 +12,11 @@ class _ProgressTrackingPageState extends State<ProgressTrackingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppTheme.colors(context).background,
-      body: Center(
-        child: Text(
-          'Progress Tracking Page',
-          style: AppTheme.textTheme(context).bodyLarge,
-        ),
+      appBar: AppBar(
+        title: const Text('Progress'),
+      ),
+      body: const Center(
+        child: ProgressChart(),
       ),
     );
   }

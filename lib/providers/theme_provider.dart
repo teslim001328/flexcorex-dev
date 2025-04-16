@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flexcorex/themes/app_theme.dart';
 
 class ThemeProvider extends ChangeNotifier {
-  ThemeData _currentTheme = AppTheme.darkTheme;
+  ThemeMode _themeMode = ThemeMode.system;
 
-  ThemeData get currentTheme => _currentTheme;
+  ThemeMode get themeMode => _themeMode;
 
-  void changeTheme(bool isDarkMode) {
-    _currentTheme = isDarkMode ? AppTheme.darkTheme : AppTheme.lightTheme;
+  bool get isDarkMode => _themeMode == ThemeMode.dark;
+
+  void toggleTheme(bool isOn) {
+    _themeMode = isOn ? ThemeMode.dark : ThemeMode.light;
     notifyListeners();
   }
 }

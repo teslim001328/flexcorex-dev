@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flexcorex/themes/app_theme.dart';
+import 'package:flexcorex/themes/colors.dart';
 
 class BottomNavBar extends StatefulWidget {
-  final int selectedIndex;
+  final int? selectedIndex;
   final Function(int) onItemTapped;
 
   BottomNavBar({required this.selectedIndex, required this.onItemTapped});
@@ -51,18 +51,17 @@ class _BottomNavBarState extends State<BottomNavBar> {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             Icon(
-              icon,
-              color: widget.selectedIndex == index
-                  ? AppTheme.primaryColor
-                  : Theme.of(context).iconTheme.color,
+              icon, color: widget.selectedIndex == index
+                ? AppColors.deepTeal
+                : Theme
+                .of(context)
+                  .iconTheme
+                  .color,
             ),
             Text(
               label,
               style: TextStyle(
-                fontSize: 12,
-                color: widget.selectedIndex == index 
-                    ? AppTheme.primaryColor
-                    : Theme.of(context).textTheme.bodySmall!.color,
+                fontSize: 12, color: widget.selectedIndex == index ? AppColors.deepTeal : Theme.of(context).textTheme.bodySmall!.color,
               ),
             )
           ],
@@ -80,16 +79,11 @@ class _BottomNavBarState extends State<BottomNavBar> {
         child: Container(
           margin: const EdgeInsets.only(top: 5),
           decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [ 
-                AppTheme.primaryColor.withOpacity(0.8),
-                AppTheme.secondaryColor.withOpacity(0.8),
-              ], 
-            ),
+            color: AppColors.champagneGold,
             shape: BoxShape.circle,
             boxShadow: [
               BoxShadow(
-                color: AppColors.champagneGold.withOpacity(0.5),
+                color: AppColors.champagneGold.withOpacity(0.3),
                 blurRadius: 10,
                 offset: const Offset(0, 3),
               ),
@@ -100,7 +94,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
             backgroundColor: Colors.transparent,
             child: Icon(
               Icons.android,
-              size: 30,
+              size: 35,
               color: Theme.of(context).scaffoldBackgroundColor,
             ),
           ),

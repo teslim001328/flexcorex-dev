@@ -1,7 +1,6 @@
 "use client";
 
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
-import {Button} from "@/components/ui/button";
 
 const GroupCard = ({name, image, memberCount}: { name: string; image: string; memberCount: string }) => (
   <Card className="w-full md:w-64">
@@ -11,7 +10,6 @@ const GroupCard = ({name, image, memberCount}: { name: string; image: string; me
     <CardContent>
       <img src={image} alt={name} className="w-full h-32 object-cover rounded-md mb-2"/>
       <p className="text-sm text-muted-foreground">Members: {memberCount}</p>
-      <Button variant="outline" className="mt-2">Join Group</Button>
     </CardContent>
   </Card>
 );
@@ -38,13 +36,6 @@ const CommunityPage = () => {
   return (
     <div className="flex flex-col h-full p-4">
       <h1 className="text-2xl font-bold">Community</h1>
-
-      <div className="mb-4">
-        {/* Placeholder for filters */}
-        <Button variant="secondary" size="sm">Trending</Button>
-        <Button variant="secondary" size="sm">New</Button>
-        <Button variant="secondary" size="sm">My Groups</Button>
-      </div>
 
       <div className="flex flex-row gap-4 overflow-x-auto">
         {groups.map((group, index) => (

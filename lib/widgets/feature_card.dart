@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flexcorex/themes/colors.dart';
 
 // A reusable widget for feature cards with an icon, title, and description.
 class FeatureCard extends StatelessWidget {
-  FeatureCard({
+  const FeatureCard({
     required this.title,
     required this.description,
     required this.icon,
@@ -29,11 +28,10 @@ class FeatureCard extends StatelessWidget {
           child: Container(
             // Set the width of the card
             width: cardWidth,
-            // Add margin around the card
-            margin: const EdgeInsets.symmetric(horizontal: 10),
+            padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
               // Apply rounded corners to the card
-              borderRadius: BorderRadius.circular(15),
+              borderRadius: BorderRadius.circular(12),
               // Add a subtle gradient background
               gradient: LinearGradient(
                 colors: [
@@ -52,14 +50,13 @@ class FeatureCard extends StatelessWidget {
                 ),
               ],
             ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+            child:  Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Icon(icon, size: 40, color: AppColors.platinumSilver),
-                const SizedBox(height: 10),
-                Text(title, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: AppColors.platinumSilver)),
-                const SizedBox(height: 5),
-                Text(description, style: TextStyle(color: AppColors.platinumSilver.withOpacity(0.9)), textAlign: TextAlign.center, padding: const EdgeInsets.symmetric(horizontal: 10)),
+                Icon(icon, size: 32, color: Theme.of(context).colorScheme.onPrimary),
+                const SizedBox(height: 8),
+                Text(title, style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Theme.of(context).colorScheme.onPrimary)),
+                Text(description, style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.8))),
               ],
             ),
           ),
